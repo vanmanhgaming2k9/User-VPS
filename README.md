@@ -8,6 +8,11 @@
 | `net localgroup "Remote Desktop Users" nullaMC /add` | Thêm user vào nhóm RDP | Cho phép user `nullaMC` có quyền đăng nhập từ xa qua Remote Desktop |
 | `reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\UserList" /v nullaMC /t REG_DWORD /d 1 /f` | Thêm user vào danh sách đặc biệt trong đăng nhập Windows | Đánh dấu user `nullaMC` trong registry để điều chỉnh quyền hiển thị hoặc đăng nhập |
 | `reg add "HKU\.DEFAULT\Software\Microsoft\Windows NT\CurrentVersion\Winlogon" /v Shell /t REG_SZ /d "cmd.exe" /f` | Đổi shell mặc định của hệ thống | Đặt `cmd.exe` làm shell mặc định thay cho explorer.exe trong hồ sơ người dùng mặc định |
+| `wmic useraccount where "name='nullaMC'" get sid` | Lấy SID của user `nullaMC` | Lấy Security Identifier (SID) để thao tác chi tiết trên registry theo user |
+| `reg add "HKU\<User_SID>\Software\Microsoft\Windows\CurrentVersion\Policies\System" /v DisableTaskMgr /t REG_DWORD /d 1 /f` | Khóa Task Manager cho user có SID tương ứng | Ngăn user đó mở Task Manager (thay `<User_SID>` bằng SID thực tế) |
+| `reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\System" /v DisableTaskMgr /t REG_DWORD /d 1 /f` | Khóa Task Manager cho user hiện tại | Ngăn user hiện tại mở Task Manager |
+| `reg add "HKU\<User_SID>\Software\Microsoft\Windows\CurrentVersion\Policies\System" /v DisableTaskMgr /t REG_DWORD /d 0 /f` | Mở lại Task Manager cho user có SID tương ứng | Cho phép user mở Task Manager (thay `<User_SID>` bằng SID thực tế) |
+| `reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\System" /v DisableTaskMgr /t REG_DWORD /d 0 /f` | Mở lại Task Manager cho user hiện tại | Cho phép user hiện tại mở Task Manager |
 
 ### Mục đích
 
